@@ -15,7 +15,7 @@ MQTT_IP_ADDR = "localhost"
 MQTT_PORT = 1883
 MQTT_ADDR = "{}:{}".format(MQTT_IP_ADDR, str(MQTT_PORT))
 
-class Template(object):
+class MusicApp(object):
     """Class used to wrap action code with mqtt connection
         
         Please change the name refering to your application
@@ -32,7 +32,7 @@ class Template(object):
         self.start_blocking()
         
     # --> Sub callback function, one per intent
-    def intent_1_callback(self, hermes, intent_message):
+    def play_music_callback(self, hermes, intent_message):
         # terminate the session first if not continue
         hermes.publish_end_session(intent_message.session_id, "")
         
@@ -40,17 +40,17 @@ class Template(object):
         print '[Received] intent: {}'.format(intent_message.intent.intent_name)
 
         # if need to speak the execution result by tts
-        hermes.publish_start_session_notification(intent_message.site_id, "Action1 has been done", "")
+        hermes.publish_start_session_notification(intent_message.site_id, "PlayMusic has been done", "")
 
-    def intent_2_callback(self, hermes, intent_message):
-        # terminate the session first if not continue
-        hermes.publish_end_session(intent_message.session_id, "")
+    #def intent_2_callback(self, hermes, intent_message):
+        ## terminate the session first if not continue
+        #hermes.publish_end_session(intent_message.session_id, "")
 
-        # action code goes here...
-        print '[Received] intent: {}'.format(intent_message.intent.intent_name)
+        ## action code goes here...
+        #print '[Received] intent: {}'.format(intent_message.intent.intent_name)
 
-        # if need to speak the execution result by tts
-        hermes.publish_start_session_notification(intent_message.site_id, "Action2 has been done", "")
+        ## if need to speak the execution result by tts
+        #hermes.publish_start_session_notification(intent_message.site_id, "Action2 has been done", "")
 
     # More callback function goes here...
 
@@ -58,9 +58,9 @@ class Template(object):
     def master_intent_callback(self,hermes, intent_message):
         coming_intent = intent_message.intent.intent_name
         if coming_intent == 'intent_1':
-            self.intent_1_callback(hermes, intent_message)
-        if coming_intent == 'intent_2':
-            self.intent_2_callback(hermes, intent_message)
+            self.play_music_callback(hermes, intent_message)
+        #if coming_intent == 'intent_2':
+            #self.intent_2_callback(hermes, intent_message)
 
         # more callback and if condition goes here...
 
@@ -70,4 +70,4 @@ class Template(object):
             h.subscribe_intents(self.master_intent_callback).start()
 
 if __name__ == "__main__":
-    Template()
+    MusicApp()
