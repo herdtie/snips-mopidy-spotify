@@ -39,6 +39,9 @@ class MusicApp(object):
         # action code goes here...
         print '[Received] intent: {}'.format(intent_message.intent.intent_name)
 
+        # start playback in the background
+        Popen(['/usr/bin/cvlc', '/home/pi/il_coccodrillo.mp3'])
+
         # if need to speak the execution result by tts
         hermes.publish_start_session_notification(intent_message.site_id, "PlayMusic has been done", "")
 
@@ -57,7 +60,7 @@ class MusicApp(object):
     # --> Master callback function, triggered everytime an intent is recognized
     def master_intent_callback(self,hermes, intent_message):
         coming_intent = intent_message.intent.intent_name
-        if coming_intent == 'intent_1':
+        if coming_intent == 'Musik' :
             self.play_music_callback(hermes, intent_message)
         #if coming_intent == 'intent_2':
             #self.intent_2_callback(hermes, intent_message)
