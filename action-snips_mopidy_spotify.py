@@ -5,6 +5,7 @@ from snipsTools import SnipsConfigParser
 from hermes_python.hermes import Hermes
 from hermes_python.ontology import *
 import io
+from subprocess import Popen
 
 CONFIG_INI = "config.ini"
 
@@ -39,31 +40,46 @@ class MusicApp(object):
         # action code goes here...
         print '[Received] intent: {}'.format(intent_message.intent.intent_name)
 
+        with open('/tmp/snips-mopidy-spotify-2', 'wt') as writer:
+            writer.write('test2')
+
         # start playback in the background
-        Popen(['/usr/bin/cvlc', '/home/pi/il_coccodrillo.mp3'])
+        Popen(['/usr/bin/cvlc', '/var/lib/mopidy/media/il_coccodrillo.mp3'])
+
+        with open('/tmp/snips-mopidy-spotify-3', 'wt') as writer:
+            writer.write('test3')
 
         # if need to speak the execution result by tts
         hermes.publish_start_session_notification(intent_message.site_id, "PlayMusic has been done", "")
 
-    #def intent_2_callback(self, hermes, intent_message):
+        with open('/tmp/snips-mopidy-spotify-4', 'wt') as writer:
+            writer.write('test4')
+
+
+    def intent_warum_callback(self, hermes, intent_message):
         ## terminate the session first if not continue
-        #hermes.publish_end_session(intent_message.session_id, "")
+        hermes.publish_end_session(intent_message.session_id, "")
 
         ## action code goes here...
-        #print '[Received] intent: {}'.format(intent_message.intent.intent_name)
+        print '[Received] intent: {}'.format(intent_message.intent.intent_name)
 
         ## if need to speak the execution result by tts
-        #hermes.publish_start_session_notification(intent_message.site_id, "Action2 has been done", "")
+        hermes.publish_start_session_notification(intent_message.site_id, "warum ist die Banane krumm? weil keiner in den Urwald yog und sie wieder grade bog", "")
 
     # More callback function goes here...
 
     # --> Master callback function, triggered everytime an intent is recognized
     def master_intent_callback(self,hermes, intent_message):
         coming_intent = intent_message.intent.intent_name
-        if coming_intent == 'Musik' :
+        with open('/tmp/snips-mopidy-spotify', 'wt') as writer:
+            writer.write('test')
+            writer.write(str(intent_message))
+            writer.write(coming_intent)
+
+        if coming_intent == 'herdtie:Musik' :
             self.play_music_callback(hermes, intent_message)
-        #if coming_intent == 'intent_2':
-            #self.intent_2_callback(hermes, intent_message)
+        if coming_intent == 'herdtie:Warum':
+            self.intent_warum_callback(hermes, intent_message)
 
         # more callback and if condition goes here...
 
