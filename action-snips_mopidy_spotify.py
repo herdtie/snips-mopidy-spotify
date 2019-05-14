@@ -64,7 +64,7 @@ class MusicApp(object):
         print '[Received] intent: {}'.format(intent_message.intent.intent_name)
 
         ## if need to speak the execution result by tts
-        hermes.publish_start_session_notification(intent_message.site_id, "warum ist die Banane krumm? weil keiner in den Urwald yog und sie wieder grade bog", "")
+        hermes.publish_start_session_notification(intent_message.site_id, "warum ist die Banane krumm? weil keiner in den Urwald zog und sie wieder grade bog", "")
 
     # More callback function goes here...
 
