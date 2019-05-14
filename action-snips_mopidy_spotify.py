@@ -7,6 +7,8 @@ from hermes_python.ontology import *
 import io
 from subprocess import Popen
 
+from http_mopidy import HttpMopidy
+
 CONFIG_INI = "config.ini"
 
 # If this skill is supposed to run on the satellite,
@@ -29,6 +31,8 @@ class MusicApp(object):
         except :
             self.config = None
 
+        self.mopidy = HttpMopidy()
+
         # start listening to MQTT
         self.start_blocking()
         
@@ -43,8 +47,8 @@ class MusicApp(object):
         with open('/tmp/snips-mopidy-spotify-2', 'wt') as writer:
             writer.write('test2')
 
-        # start playback in the background
-        Popen(['/usr/bin/cvlc', '/var/lib/mopidy/media/il_coccodrillo.mp3'])
+        # Tell mopidy to start playing "Die Moldau" by Smetana
+        self.mopidy.play_single_track('spotify:track:6y51eybZuc4Jv8bXbL3d9K')
 
         with open('/tmp/snips-mopidy-spotify-3', 'wt') as writer:
             writer.write('test3')
