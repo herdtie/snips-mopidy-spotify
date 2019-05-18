@@ -58,7 +58,7 @@ class MusicApp(object):
             writer.write('test3')
 
         # if need to speak the execution result by tts
-        hermes.publish_start_session_notification(intent_message.site_id, "PlayMusic has been done", "")
+        hermes.publish_start_session_notification(intent_message.site_id, "Ok", "")
 
         with open('/tmp/snips-mopidy-spotify-4', 'wt') as writer:
             writer.write('test4')
