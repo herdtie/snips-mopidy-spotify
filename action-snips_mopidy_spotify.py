@@ -48,7 +48,11 @@ class MusicApp(object):
             writer.write('test2')
 
         # Tell mopidy to start playing "Die Moldau" by Smetana
-        self.mopidy.play_single_track('spotify:track:6y51eybZuc4Jv8bXbL3d9K')
+        #self.mopidy.play_single_track('spotify:track:6y51eybZuc4Jv8bXbL3d9K')
+        # Vivaldi, first
+        #self.mopidy.play_single_track('spotify:track:4js8kCJgiQJ0suhau4ZbTh')
+        # Vivaldi, 4 seasons album
+        self.mopidy.play_single_track('spotify:album:4h7BsBugLjCCyCY1vfAPAR')
 
         with open('/tmp/snips-mopidy-spotify-3', 'wt') as writer:
             writer.write('test3')
