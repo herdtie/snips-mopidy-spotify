@@ -44,9 +44,6 @@ class MusicApp(object):
         # action code goes here...
         print '[Received] intent: {}'.format(intent_message.intent.intent_name)
 
-        with open('/tmp/snips-mopidy-spotify-2', 'wt') as writer:
-            writer.write('test2')
-
         # Tell mopidy to start playing "Die Moldau" by Smetana
         #self.mopidy.play_single_track('spotify:track:6y51eybZuc4Jv8bXbL3d9K')
         # Vivaldi, first
@@ -54,14 +51,8 @@ class MusicApp(object):
         # Vivaldi, 4 seasons album
         self.mopidy.play_single_track('spotify:album:4h7BsBugLjCCyCY1vfAPAR')
 
-        with open('/tmp/snips-mopidy-spotify-3', 'wt') as writer:
-            writer.write('test3')
-
         # if need to speak the execution result by tts
         hermes.publish_start_session_notification(intent_message.site_id, "Ok", "")
-
-        with open('/tmp/snips-mopidy-spotify-4', 'wt') as writer:
-            writer.write('test4')
 
 
     def intent_warum_callback(self, hermes, intent_message):
@@ -79,10 +70,6 @@ class MusicApp(object):
     # --> Master callback function, triggered everytime an intent is recognized
     def master_intent_callback(self,hermes, intent_message):
         coming_intent = intent_message.intent.intent_name
-        with open('/tmp/snips-mopidy-spotify', 'wt') as writer:
-            writer.write('test')
-            writer.write(str(intent_message))
-            writer.write(coming_intent)
 
         if coming_intent == 'herdtie:Musik' :
             self.play_music_callback(hermes, intent_message)
