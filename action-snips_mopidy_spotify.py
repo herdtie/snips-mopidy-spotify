@@ -55,6 +55,45 @@ class MusicApp(object):
         hermes.publish_start_session_notification(intent_message.site_id, "Ok", "")
 
 
+    def stop_music_callback(self, hermes, intent_message):
+        # terminate the session first if not continue
+        hermes.publish_end_session(intent_message.session_id, "")
+
+        # action code goes here...
+        print '[Received] intent: {}'.format(intent_message.intent.intent_name)
+
+        # Tell mopidy to stop_music_callback
+        self.mopidy.stop()
+
+
+    def volume_up_callback(self, hermes, intent_message):
+        hermes.publish_end_session(intent_message.session_id, "")
+
+        # action code goes here...
+        print '[Received] intent: {}'.format(intent_message.intent.intent_name)
+
+        # Get volume
+        volume = self.mopidy.get_volume()
+
+        new_vol = min(100, volume+20)
+        self.mopidy.set_volume(new_vol)
+        hermes.publish_start_session_notification(intent_message.site_id, u"Lautsẗarke jetzt bei {} Prozent".format(new_vol), "")
+
+
+    def volume_down_callback(self, hermes, intent_message):
+        hermes.publish_end_session(intent_message.session_id, "")
+
+        # action code goes here...
+        print '[Received] intent: {}'.format(intent_message.intent.intent_name)
+
+        # Get volume
+        volume = self.mopidy.get_volume()
+
+        new_vol = max(0, volume-20)
+        self.mopidy.set_volume(new_vol)
+        hermes.publish_start_session_notification(intent_message.site_id, u"Lautsẗarke jetzt bei {} Prozent".format(new_vol), "")
+
+
     def intent_warum_callback(self, hermes, intent_message):
         ## terminate the session first if not continue
         hermes.publish_end_session(intent_message.session_id, "")
@@ -73,7 +112,13 @@ class MusicApp(object):
 
         if coming_intent == 'herdtie:Musik' :
             self.play_music_callback(hermes, intent_message)
-        if coming_intent == 'herdtie:Warum':
+        elif coming_intent == 'herdtie:MusikStop':
+            self.stop_music_callback(hermes, intent_message)
+        elif coming_intent == 'herdtie:MusikVolumeUp':
+            self.volume_up_callback(hermes, intent_message)
+        elif coming_intent == 'herdtie:MusikVolumeDown':
+            self.volume_down_callback(hermes, intent_message)
+        elif coming_intent == 'herdtie:Warum':
             self.intent_warum_callback(hermes, intent_message)
 
         # more callback and if condition goes here...
