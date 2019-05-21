@@ -48,8 +48,8 @@ class MusicApp(object):
         #self.mopidy.play_single_track('spotify:track:6y51eybZuc4Jv8bXbL3d9K')
         # Vivaldi, first
         #self.mopidy.play_single_track('spotify:track:4js8kCJgiQJ0suhau4ZbTh')
-        # Vivaldi, 4 seasons album
-        self.mopidy.play_single_track('spotify:album:4h7BsBugLjCCyCY1vfAPAR')
+        # Vivaldi, 4 seasons album (not the fast one)
+        self.mopidy.play_single_track('spotify:album:1unTNtXCpPRaKH4u24nrcl')
 
         # if need to speak the execution result by tts
         hermes.publish_start_session_notification(intent_message.site_id, "Ok", "")
