@@ -48,8 +48,23 @@ class MusicApp(object):
         #self.mopidy.play_single_track('spotify:track:6y51eybZuc4Jv8bXbL3d9K')
         # Vivaldi, first
         #self.mopidy.play_single_track('spotify:track:4js8kCJgiQJ0suhau4ZbTh')
+        # zauberlehrling: spotify:track:26Ko7pSCJ1lV5NOtIhsocy
         # Vivaldi, 4 seasons album (not the fast one)
         self.mopidy.play_single_track('spotify:album:1unTNtXCpPRaKH4u24nrcl')
+
+        # if need to speak the execution result by tts
+        hermes.publish_start_session_notification(intent_message.site_id, "Ok", "")
+    # --> Sub callback function, one per intent
+
+
+    def play_zauberlehrling(self, hermes, intent_message):
+        # terminate the session first if not continue
+        hermes.publish_end_session(intent_message.session_id, "")
+
+        # action code goes here...
+        print '[Received] intent: {}'.format(intent_message.intent.intent_name)
+
+        self.mopidy.play_single_track('spotify:track:26Ko7pSCJ1lV5NOtIhsocy')
 
         # if need to speak the execution result by tts
         hermes.publish_start_session_notification(intent_message.site_id, "Ok", "")
@@ -112,6 +127,8 @@ class MusicApp(object):
 
         if coming_intent == 'herdtie:Musik' :
             self.play_music_callback(hermes, intent_message)
+        if coming_intent == 'herdtie:zauberlehrling' :
+            self.play_zauberlehrling(hermes, intent_message)
         elif coming_intent == 'herdtie:MusikStop':
             self.stop_music_callback(hermes, intent_message)
         elif coming_intent == 'herdtie:MusikVolumeUp':
