@@ -119,6 +119,18 @@ class MusicApp(object):
         ## if need to speak the execution result by tts
         hermes.publish_start_session_notification(intent_message.site_id, "warum ist die Banane krumm? weil keiner in den Urwald zog und sie wieder grade bog", "")
 
+
+    def intent_milan_callback(self, hermes, intent_message):
+        ## terminate the session first if not continue
+        hermes.publish_end_session(intent_message.session_id, "")
+
+        ## action code goes here...
+        print '[Received] intent: {}'.format(intent_message.intent.intent_name)
+
+        ## if need to speak the execution result by tts
+        hermes.publish_start_session_notification(intent_message.site_id,
+                "Hallo Milan, wir freuen uns dass du da bist. Herzlich Willkommen!", "")
+
     # More callback function goes here...
 
     # --> Master callback function, triggered everytime an intent is recognized
@@ -137,6 +149,8 @@ class MusicApp(object):
             self.volume_down_callback(hermes, intent_message)
         elif coming_intent == 'herdtie:Warum':
             self.intent_warum_callback(hermes, intent_message)
+        elif coming_intent == 'herdtie:HalloMilan':
+            self.intent_milan_callback(hermes, intent_message)
 
         # more callback and if condition goes here...
 
